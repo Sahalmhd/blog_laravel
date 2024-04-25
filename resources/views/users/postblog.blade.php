@@ -259,7 +259,7 @@
 
         <section class="section dashboard">
 
-            <form action="{{route('post')}}" method="POST" class="mt-4">
+            <form action="{{ route('post') }}" method="POST" enctype="multipart/form-data" class="mt-4">
                 @csrf
                 <div class="mb-3">
                     <label for="title" class="form-label">Title:</label>
@@ -269,10 +269,15 @@
                     <label for="content" class="form-label">Content:</label>
                     <textarea name="content" id="content" class="form-control" rows="6" required></textarea>
                 </div>
+                <div class="mb-3">
+                    <label for="image" class="form-label">Image:</label>
+                    <input type="file" name="image" id="image" class="form-control">
+                </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
             
         </section>
+        
 
 
 

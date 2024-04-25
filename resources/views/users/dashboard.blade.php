@@ -238,35 +238,31 @@
     </aside><!-- End Sidebar-->
 
     <main id="main" class="main">
-        @if(session('success'))
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        {{ session('success') }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-@endif
-
-        <div class="pagetitle">
-            <h1>Blank Page</h1>
-            <nav>
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                    <li class="breadcrumb-item">Pages</li>
-                    <li class="breadcrumb-item active">Blank</li>
-                </ol>
-            </nav>
-        </div><!-- End Page Title -->
         <section class="section dashboard">
-    @foreach($posts as $post)
-        <div class="card mb-3">
-            <div class="card-header">Posted: {{ $post->user->name }}</div>
-            <div class="card-body">
-                <h5 class="card-title">Title: {{ $post->title }}</h5>
-                <p class="card-text">{{ $post->content }}</p>
-              
+            @foreach($posts as $post)
+            @php
+                $imagePath = $post->image ? asset('images/' . $post->image) : null;
+            @endphp
+        
+            <div class="card mb-3">
+                <div class="card-header">Posted by: {{ $post->user->name }}</div>
+                <div class="card-body">
+                    @if($imagePath)
+                        <img src="{{ $imagePath }}" alt="Post Image" style="width: 500px; height: auto;" class="img-thumbnail">
+                    @endif
+                    <h5 class="card-title">Title: {{ $post->title }}</h5>
+                    <p class="card-text">{{ $post->content }}</p>
+                    @if(auth()->id() == $post->user->id)
+                        <a href="{{ route('edit', ['id' => $post->id]) }}" class="btn btn-primary">Edit</a>
+                    @endif
+                </div>
             </div>
-        </div>
-    @endforeach
-</section>
+        @endforeach
+        
+        
+        
+        </section>
+        
         
         
 

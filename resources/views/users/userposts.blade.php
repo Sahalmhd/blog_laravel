@@ -258,8 +258,12 @@
         <section class="section dashboard">
             @foreach($posts as $post)
                 <div class="card mb-3">
-                    <div class="card-header">Posted: {{ $post->user->name }}</div>
+                    <div class="card-header">Posted by: {{ $post->user->name }}</div>
                     <div class="card-body">
+                        @php
+                            $imagePath = $post->image ? asset('images/' . $post->image) : null;
+                        @endphp
+                        <img src="{{ $imagePath }}" alt="Post Image" style="width: 500px; height: auto;" class="img-thumbnail">
                         <h5 class="card-title">Title: {{ $post->title }}</h5>
                         <p class="card-text">{{ $post->content }}</p>
                         @if(auth()->id() == $post->user->id)

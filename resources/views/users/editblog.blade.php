@@ -202,13 +202,15 @@
         <ul class="sidebar-nav" id="sidebar-nav">
 
             <li class="nav-item">
-                <a class="nav-link " href="{{route('user.dashboard')}}">
+                <a class="nav-link collapsed " href="{{route('user.dashboard')}}">
                     <i class="bi bi-grid"></i>
                     <span>Dashboard</span>
                 </a>
             </li><!-- End Dashboard Nav -->
 
         </ul>
+
+
 
 
         
@@ -233,7 +235,9 @@
             </li><!-- End Dashboard Nav -->
 
         </ul>
+
         
+ 
         
         
 
@@ -254,9 +258,8 @@
             </nav>
         </div><!-- End Page Title -->
 
-
         <section class="section dashboard">
-            <form action="{{ route('update', ['id' => $post->id]) }}" method="POST" class="mt-4">
+            <form action="{{ route('update', ['id' => $post->id]) }}" method="POST" class="mt-4" enctype="multipart/form-data">
                 @csrf
                 <div class="mb-3">
                     <label for="title" class="form-label">Title:</label>
@@ -266,9 +269,21 @@
                     <label for="content" class="form-label">Content:</label>
                     <textarea name="content" id="content" class="form-control" rows="6" required>{{ $post->content ?? '' }}</textarea>
                 </div>
+                @if($post->image)
+                    <div class="mb-3">
+                        <label for="current_image" class="form-label">Image</label>
+                        <br>
+                        <img src="{{ asset('images/' . $post->image) }}" alt="Current Image" style="max-width: 500px; height: auto;" class="img-thumbnail">
+                    </div>
+                @endif
+                <div class="mb-3">
+                    <label for="image" class="form-label">Edit Image:</label>
+                    <input type="file" name="image" id="image" class="form-control">
+                </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </section>
+        
         
 
 
