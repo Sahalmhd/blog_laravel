@@ -202,7 +202,7 @@
         <ul class="sidebar-nav" id="sidebar-nav">
 
             <li class="nav-item">
-                <a class="nav-link collapsed " href="{{route('user.dashboard')}}">
+                <a class="nav-link " href="{{route('user.dashboard')}}">
                     <i class="bi bi-grid"></i>
                     <span>Dashboard</span>
                 </a>
@@ -215,7 +215,7 @@
         <ul class="sidebar-nav" id="sidebar-nav">
 
             <li class="nav-item">
-                <a class="nav-link " href="{{route('user.postblog')}}">
+                <a class="nav-link collapsed" href="{{route('user.postblog')}}">
                     <i class="bi bi-grid"></i>
                     <span>post blog</span>
                 </a>
@@ -255,24 +255,21 @@
         </div><!-- End Page Title -->
 
 
-
-
         <section class="section dashboard">
-
-            <form action="{{route('post')}}" method="POST" class="mt-4">
+            <form action="{{ route('update', ['id' => $post->id]) }}" method="POST" class="mt-4">
                 @csrf
                 <div class="mb-3">
                     <label for="title" class="form-label">Title:</label>
-                    <input type="text" name="title" id="title" class="form-control" required>
+                    <input type="text" name="title" id="title" class="form-control" value="{{ $post->title ?? '' }}" required>
                 </div>
                 <div class="mb-3">
                     <label for="content" class="form-label">Content:</label>
-                    <textarea name="content" id="content" class="form-control" rows="6" required></textarea>
+                    <textarea name="content" id="content" class="form-control" rows="6" required>{{ $post->content ?? '' }}</textarea>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
-            
         </section>
+        
 
 
 

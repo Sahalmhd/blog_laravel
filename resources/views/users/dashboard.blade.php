@@ -218,6 +218,19 @@
             </li><!-- End Dashboard Nav -->
 
         </ul>
+
+         
+        <ul class="sidebar-nav" id="sidebar-nav">
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{{route('userpost')}}">
+                    <i class="bi bi-grid"></i>
+                    <span>my post</span>
+                </a>
+            </li><!-- End Dashboard Nav -->
+
+        </ul>
+        
         
 
 
@@ -242,25 +255,19 @@
                 </ol>
             </nav>
         </div><!-- End Page Title -->
-
-
-
         <section class="section dashboard">
-            <div class="container">
-                <h1>User Dashboard</h1>
-                <div class="row">
-                    @foreach($posts as $post)
-                    <div class="card mb-3">
-                        <div class="card-header">User: {{ $post->user->name }}</div>
-                        <div class="card-body">
-                            <h5 class="card-title">title: {{ $post->title }}</h5>
-                            <p class="card-text">   {{ $post->content }}</p>
-                        </div>
-                    </div>
-                @endforeach
-                </div>
+    @foreach($posts as $post)
+        <div class="card mb-3">
+            <div class="card-header">Posted: {{ $post->user->name }}</div>
+            <div class="card-body">
+                <h5 class="card-title">Title: {{ $post->title }}</h5>
+                <p class="card-text">{{ $post->content }}</p>
+              
             </div>
-        </section>
+        </div>
+    @endforeach
+</section>
+        
         
 
 

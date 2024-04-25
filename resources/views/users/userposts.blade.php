@@ -1,6 +1,3 @@
-<div>
-    <!-- Simplicity is an acquired taste. - Katharine Gerould -->
-</div>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -126,12 +123,12 @@
                     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#"
                         data-bs-toggle="dropdown">
                         <img src="{{ asset('assets/img/profile-img.jpg') }}" alt="Profile" class="rounded-circle">
-                        <span class="d-none d-md-block dropdown-toggle ps-2">{{ $username }}</span>
+                        <span class="d-none d-md-block dropdown-toggle ps-2">{{$user->name}}</span>
                     </a><!-- End Profile Iamge Icon -->
 
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                         <li class="dropdown-header">
-                            <h6>{{ $username }}</h6>
+                            <h6>{{ $user->name }}</h6>
                             <span>role</span>
                         </li>
                         <li>
@@ -198,11 +195,10 @@
 
 
 
-
         <ul class="sidebar-nav" id="sidebar-nav">
 
             <li class="nav-item">
-                <a class="nav-link collapsed " href="{{route('user.dashboard')}}">
+                <a class="nav-link collapsed" href="{{route('user.dashboard')}}">
                     <i class="bi bi-grid"></i>
                     <span>Dashboard</span>
                 </a>
@@ -215,18 +211,19 @@
         <ul class="sidebar-nav" id="sidebar-nav">
 
             <li class="nav-item">
-                <a class="nav-link " href="{{route('user.postblog')}}">
+                <a class="nav-link collapsed" href="{{route('user.postblog')}}">
                     <i class="bi bi-grid"></i>
                     <span>post blog</span>
                 </a>
             </li><!-- End Dashboard Nav -->
 
         </ul>
-           
+
+         
         <ul class="sidebar-nav" id="sidebar-nav">
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="{{route('userpost')}}">
+                <a class="nav-link " href="">
                     <i class="bi bi-grid"></i>
                     <span>my post</span>
                 </a>
@@ -235,13 +232,18 @@
         </ul>
         
         
-        
 
 
 
     </aside><!-- End Sidebar-->
 
     <main id="main" class="main">
+        @if(session('success'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+@endif
 
         <div class="pagetitle">
             <h1>Blank Page</h1>
@@ -253,26 +255,28 @@
                 </ol>
             </nav>
         </div><!-- End Page Title -->
-
-
-
-
         <section class="section dashboard">
-
-            <form action="{{route('post')}}" method="POST" class="mt-4">
-                @csrf
-                <div class="mb-3">
-                    <label for="title" class="form-label">Title:</label>
-                    <input type="text" name="title" id="title" class="form-control" required>
+            @foreach($posts as $post)
+                <div class="card mb-3">
+                    <div class="card-header">Posted: {{ $post->user->name }}</div>
+                    <div class="card-body">
+                        <h5 class="card-title">Title: {{ $post->title }}</h5>
+                        <p class="card-text">{{ $post->content }}</p>
+                        @if(auth()->id() == $post->user->id)
+                            <a href="{{ route('edit', ['id' => $post->id]) }}" class="btn btn-primary">Edit</a>
+                            <form method="POST" action="{{ route('delete', ['id' => $post->id]) }}" style="display: inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        @endif
+                    </div>
                 </div>
-                <div class="mb-3">
-                    <label for="content" class="form-label">Content:</label>
-                    <textarea name="content" id="content" class="form-control" rows="6" required></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
-            
+            @endforeach
         </section>
+        
+        
+        
 
 
 
